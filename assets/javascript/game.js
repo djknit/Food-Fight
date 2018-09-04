@@ -27,10 +27,10 @@ function Character(name, hp, attack, counter) {
     };
     this.reset = function() {
         this.healthPoints = this.startingHealthPoints;
-        this.displayHp();
         this.attackPoints = this.startingAttackPoints;
         this.counterAttackPoints = this.startingCounterAttackPoints;
         this.isDefeated = false;
+        this.displayHp();
     };
 }
 
@@ -42,16 +42,21 @@ characters[3] = new Character("Carrot", 200, 30, 40);
 
 var attacker = {};
 var defender = {};
-gamePhase = "characterSelection"
+var gamePhase = "characterSelection";
+var enemiesLeft = 3;
 
 function newGame() {
-    gamePhase = "characterSelection"
+    gamePhase = "characterSelection";
+    $("#info").html("Choose your character by clicking on it.");
     for (i = 0; i < characters.length; i++) {
         characters[i].reset();
         $("#characters").append(characters[i].icon);
         $("#characters").append(" ");
     }
+    enemiesLeft = 3;
 }
+
+newGame();
 
 function chooseCharacter(character0) {
     if (gamePhase === "characterSelection") {
@@ -66,14 +71,16 @@ function chooseCharacter(character0) {
             }
         }
         gamePhase = "enemySelection";
+        $("#info").html("Choose an enemy to battle.");
     }
 }
 
 function chooseDefender(enemy0) {
     if (gamePhase === "enemySelection") {
-        gamePhase = "battle";
         defender = enemy0;
         $("#defender").append(enemy0.icon);
+        gamePhase = "battle";
+        $("#info").html("Click the attack button to attack your enemy.")
     }
 }
 
@@ -97,7 +104,23 @@ characters[3].icon.on("click", function() {
 $("#attack_btn").on("click", function() {
     if (gamePhase === "battle") {
         attacker.attack(defender);
+        if (defender.healthPoints <= 0) {
+            defender.icon.remove();
+            enemiesLeft--;
+            if (enemiesLeft === 0) {
+                $("#info").html("You won! Choose another character to fight with!");
+                newGame();
+            }
+            else {
+                gamePhase = "enemySelection";
+                $("#info").html("Choose an enemy to battle next.");
+            }
+        }
         defender.defend(attacker);
         attacker.incrementAttack();
+        if (attacker.healthPoints <= 0) {
+            $("#info").html("You lost. Try again. Choose a character.");
+            newGame();
+        }
     }
 });
