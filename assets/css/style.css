@@ -1,0 +1,39 @@
+.icon_image {
+    height: 80px;
+    display: inline-block;
+}
+
+.icon_image_container {
+    width: 133px;
+    text-align: center;
+    background: white;
+    /* border: 1px solid black; */
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.icon {
+    width: 153px;
+    border: 2px solid black;
+    text-align: center;
+    margin: 0;
+    display: inline-block;
+}
+
+h1 {
+    font-size: 40px;
+}
+
+h2 {
+    font-size: 28px;
+    margin-top: 10px;
+}
+
+.icon_area {
+    height: 150px;
+}
+
+#attack_btn {
+    font-size: 24px;
+    margin-top: 8px;
+}
