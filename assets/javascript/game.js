@@ -47,6 +47,8 @@ var attacker = {};
 var defender = {};
 var gamePhase = "characterSelection";
 var enemiesLeft = 3;
+var wins = 0;
+var losses = 0;
 
 // Functions
 // resetting for new game
@@ -57,6 +59,7 @@ function newGame() {
         $("#characters").append(" ");
         // removing classes added during previous game from character icons
         characters[i].icon.removeClass("user_character enemy in_battle");
+        characters[i].icon.addClass("choosable")
         // Adding click events for elements that were dynamically removed and re-added to the page losing their click events in the process
         if (characters[i].isDefeated) {
             characters[i].icon.on("click", function() {
@@ -65,7 +68,6 @@ function newGame() {
                 chooseCharacter(characters[i]);
             });
         }
-        characters[i].isDefeated = false;
         characters[i].reset();
     }
     enemiesLeft = 3;
@@ -77,6 +79,7 @@ function chooseCharacter(character0) {
         attacker = character0;
         // adding class to chosen character icon for changing style
         attacker.icon.addClass("user_character");
+        attacker.icon.removeClass("choosable");
         for (i = 0; i < characters.length; i++) {
             if (characters[i] === attacker) {
                 $("#your_character").append(characters[i].icon);
@@ -97,12 +100,36 @@ function chooseDefender(enemy0) {
     if (gamePhase === "enemySelection" && enemy0 !== attacker) {
         console.log("enemy selection: " + enemy0.name);
         defender = enemy0;
+        makeAllCharactersUnchoosable();
         defender.icon.addClass("in_battle");
         attacker.icon.addClass("in_battle");
         $("#defender").append(enemy0.icon);
         gamePhase = "battle";
         $("#info").html("Click the attack button to attack your enemy.")
     }
+}
+
+// function for adding "choosable" class to all character icons
+function makeAllCharactersChoosable() {
+    for (i = 0; i < characters.length; i++) {
+        characters[i].icon.addClass("choosable");
+    }
+}
+
+// function for removing "choosable" class from all character icons
+function makeAllCharactersUnchoosable() {
+    console.log("making unchoosable")
+    for (i = 0; i < characters.length; i++) {
+        characters[i].icon.removeClass("choosable");
+    }
+}
+
+// function for writing wins and losses to page
+function displayWinsAndLosses() {
+    if ($("#wins_losses").hasClass("not_empty") === false) {
+        $("#wins_losses").addClass("not_empty");
+    }
+    $("#wins_losses").html("Wins: " + wins + "<br>Losses: " + losses);
 }
 
 // Gameplay
@@ -132,8 +159,12 @@ $("#attack_btn").on("click", function() {
             enemiesLeft--;
             attacker.icon.removeClass("in_battle");
             console.log(enemiesLeft + " enemies left");
+            makeAllCharactersChoosable();
+            attacker.icon.removeClass("choosable");
             if (enemiesLeft === 0) {
                 $("#info").prepend("You won! Choose another character to fight with!<br>Last round:<br>");
+                wins++;
+                displayWinsAndLosses();
                 newGame();
                 console.log("win");
             }
@@ -148,9 +179,14 @@ $("#attack_btn").on("click", function() {
             if (attacker.healthPoints <= 0) {
                 $("#info").prepend("You lost. Try again. Choose a character.<br>Last round:<br>");
                 $("#info").append("<br>" + defender.name + " defeated " + attacker.name + ".");
+                losses++;
+                displayWinsAndLosses();
                 newGame();
                 console.log("loss");
             }
         }
+    }
+    else {
+        $("#info").append("<br>Attack failed because you are not currently in battle.")
     }
 });
