@@ -35,6 +35,7 @@ function Character(name, hp, attack, counter) {
     };
 }
 
+// character
 var characters = [];
 characters[0] = new Character("Cupcake", 60, 30, 40);
 characters[1] = new Character("Cheeseburger", 90, 25, 60);
@@ -48,11 +49,14 @@ var gamePhase = "characterSelection";
 var enemiesLeft = 3;
 
 // Functions
+// resetting for new game
 function newGame() {
     gamePhase = "characterSelection";
     for (let i = 0; i < characters.length; i++) {
         $("#characters").append(characters[i].icon);
         $("#characters").append(" ");
+        // removing classes added during previous game from character icons
+        characters[i].icon.removeClass("attacker enemy defender");
         // Adding click events for elements that were dynamically removed and re-added to the page losing their click events in the process
         if (characters[i].isDefeated) {
             characters[i].icon.on("click", function() {
@@ -67,9 +71,12 @@ function newGame() {
     enemiesLeft = 3;
 }
 
+// functions for choosing character/defender (will be called when icon is clicked)
 function chooseCharacter(character0) {
     if (gamePhase === "characterSelection") {
         attacker = character0;
+        // adding class to chosen character icon for changing style
+        attacker.icon.addClass("attacker");
         for (i = 0; i < characters.length; i++) {
             if (characters[i] === attacker) {
                 $("#your_character").append(characters[i].icon);
@@ -77,6 +84,8 @@ function chooseCharacter(character0) {
             else {
                 $("#enemies").append(characters[i].icon);
                 $("#enemies").append(" ");
+                // adding class to enemy icons for changing style
+                characters[i].icon.addClass("enemy");
             }
         }
         gamePhase = "enemySelection";
@@ -88,6 +97,7 @@ function chooseDefender(enemy0) {
     if (gamePhase === "enemySelection") {
         console.log("enemy selection: " + enemy0.name);
         defender = enemy0;
+        defender.icon.addClass("defender");
         $("#defender").append(enemy0.icon);
         gamePhase = "battle";
         $("#info").html("Click the attack button to attack your enemy.")
@@ -98,6 +108,7 @@ function chooseDefender(enemy0) {
 newGame();
 $("#info").html("Choose a character to fight with.");
 
+// creating click events for character icons
 for (let i = 0; i < characters.length; i++) {
     characters[i].icon.on("click", function() {
         console.log(characters[i].name + " clicked");
@@ -106,6 +117,7 @@ for (let i = 0; i < characters.length; i++) {
     });
 }
 
+// attack button
 $("#attack_btn").on("click", function() {
     if (gamePhase === "battle") {
         attacker.attack(defender);
@@ -118,7 +130,7 @@ $("#attack_btn").on("click", function() {
             enemiesLeft--;
             console.log(enemiesLeft + " enemies left");
             if (enemiesLeft === 0) {
-                $("#info").append("<br>You won! Choose another character to fight with!");
+                $("#info").prepend("You won! Choose another character to fight with!<br>");
                 newGame();
                 console.log("win");
             }
@@ -132,7 +144,7 @@ $("#attack_btn").on("click", function() {
             $("#info").append("<br>" + defender.name + " attacked " + attacker.name + " for " + defender.counterAttackPoints + " damage.");
             attacker.incrementAttack();
             if (attacker.healthPoints <= 0) {
-                $("#info").append("<br>You lost. Try again. Choose a character.");
+                $("#info").prepend("You lost. Try again. Choose a character.<br>");
                 newGame();
                 console.log("loss");
             }

@@ -1,23 +1,42 @@
+body {
+    margin: 10px;
+}
+
 .icon_image {
     height: 80px;
     display: inline-block;
 }
 
 .icon_image_container {
-    width: 133px;
+    width: 120px;
     text-align: center;
     background: white;
-    /* border: 1px solid black; */
+    border: 1px solid grey;
     margin-right: auto;
     margin-left: auto;
 }
 
 .icon {
-    width: 153px;
-    border: 2px solid black;
+    width: 152px;
+    border: 2px solid blue;
     text-align: center;
     margin: 0;
     display: inline-block;
+}
+
+.icon.attacker {
+    border-color: green;
+}
+
+.icon.enemy {
+    border-color: black;
+    background-color: red;
+}
+
+.icon.defender {
+    border-color: red;
+    background-color: black;
+    color: white;
 }
 
 h1 {
@@ -29,6 +48,10 @@ h1 {
 h2 {
     font-size: 28px;
     margin-top: 10px;
+}
+
+#info {
+    font-size: 22px;
 }
 
 .icon_area {
