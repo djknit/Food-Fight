@@ -20,7 +20,7 @@ body {
     width: 152px;
     border: 2px solid blue;
     text-align: center;
-    margin: 0;
+    margin-bottom: 4px;
     display: inline-block;
 }
 

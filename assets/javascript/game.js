@@ -94,7 +94,7 @@ function chooseCharacter(character0) {
 }
 
 function chooseDefender(enemy0) {
-    if (gamePhase === "enemySelection") {
+    if (gamePhase === "enemySelection" && enemy0 !== attacker) {
         console.log("enemy selection: " + enemy0.name);
         defender = enemy0;
         defender.icon.addClass("defender");
