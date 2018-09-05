@@ -1,4 +1,9 @@
 body {
+    background-image: url("../images/picnic_blue.jpg");
+    background-size: cover;
+}
+
+#container {
     margin: 10px;
 }
 
@@ -19,13 +24,21 @@ body {
 .icon {
     width: 152px;
     border: 2px solid blue;
+    background-color: #a1DBFF;
     text-align: center;
     margin-bottom: 4px;
     display: inline-block;
 }
 
-.icon.attacker {
+.icon.user_character {
+    border-color: black;
+    background-color: green;
+    color: white;
+}
+
+.icon.user_character.in_battle {
     border-color: green;
+    background-color: black;
 }
 
 .icon.enemy {
@@ -33,7 +46,7 @@ body {
     background-color: red;
 }
 
-.icon.defender {
+.icon.enemy.in_battle {
     border-color: red;
     background-color: black;
     color: white;
