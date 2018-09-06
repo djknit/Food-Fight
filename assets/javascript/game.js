@@ -78,6 +78,8 @@ function newGame() {
         character.reset();
     });
     enemiesLeft = 3;
+    // add class for collapsing icon areas to allow instructions to appear on screen during character selection
+    $(".icon_area").addClass("collapsed");
 }
 
 // functions for adding/removing hover effect from character icons
@@ -122,6 +124,8 @@ function chooseCharacter(character0) {
                 character.icon.addClass("enemy");
             }
         });
+        // removing collapsed class from icon areas to apply min-height
+        $(".icon_area").removeClass("collapsed");
         // set game phase to allow enemy icons to be chosen to battle against
         gamePhase = "enemySelection";
         $("#info").html("Choose an enemy to battle.");
