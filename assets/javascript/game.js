@@ -73,67 +73,76 @@ var losses = 0;
 function newGame() {
     // set game phase to "characterSelection" to allow character to be chosen
     gamePhase = "characterSelection";
-    for (let i = 0; i < characters.length; i++) {
-        characters[i].reset();
-    }
+    // run reset method on each character
+    characters.forEach(function(character) {
+        character.reset();
+    });
     enemiesLeft = 3;
 }
 
-// --- functions for adding/removing "choosable" class from ALL character icons
-// --- - this is used only to remove add/remove hover effect from icons
-function makeAllCharactersChoosable() {
-    for (i = 0; i < characters.length; i++) {
-        characters[i].icon.addClass("choosable");
-    }
+// functions for adding/removing hover effect from character icons
+function makeAllCharactersUnchoosable() {
+    characters.forEach(function(character) {
+        character.icon.removeClass("choosable");
+    })
 }
 
-function makeAllCharactersUnchoosable() {
-    for (i = 0; i < characters.length; i++) {
-        characters[i].icon.removeClass("choosable");
-    }
+function makeAllCharactersChoosable() {
+    characters.forEach(function(character) {
+        character.icon.addClass("choosable");
+    })
 }
 
 // --- function for writing wins and losses to page
 function displayWinsAndLosses() {
-    if ($("#wins_losses").hasClass("not_empty") === false) {
-        $("#wins_losses").addClass("not_empty");
-    }
+    $("#wins_losses").addClass("not_empty");
     $("#wins_losses").html("Wins: " + wins + "<br>Losses: " + losses);
 }
 
-// --- functions for choosing character/defender (will be called when icon is clicked)
+// --- functions for choosing character/defender
+// --- --- user character selection function
+// --- --- - (will be called when icon is clicked but only run code if game is in character selection phase)
 function chooseCharacter(character0) {
     if (gamePhase === "characterSelection") {
         attacker = character0;
         // adding class to chosen character icon for changing style
         attacker.icon.addClass("user_character");
+        // removing hover effect from chosen character
         attacker.icon.removeClass("choosable");
-        for (i = 0; i < characters.length; i++) {
-            if (characters[i] === attacker) {
-                $("#your_character").append(characters[i].icon);
+        characters.forEach(function(character) {
+            if (character === attacker) {
+                // moving user's character to "Your Character" area
+                $("#your_character").append(character.icon);
             }
             else {
-                $("#enemies").append(characters[i].icon);
+                // moving other characters to "Enimies Available for Attack" area
+                $("#enemies").append(character.icon);
                 $("#enemies").append(" ");
                 // adding class to enemy icons for changing style
-                characters[i].icon.addClass("enemy");
+                character.icon.addClass("enemy");
             }
-        }
+        });
+        // set game phase to allow enemy icons to be chosen to battle against
         gamePhase = "enemySelection";
         $("#info").html("Choose an enemy to battle.");
     }
 }
 
+// --- --- user character selection function
+// --- --- - (will be called when icon is clicked but only run code if game is in enemy selection phase)
 function chooseDefender(enemy0) {
     if (gamePhase === "enemySelection" && enemy0 !== attacker) {
-        console.log("enemy selection: " + enemy0.name);
         defender = enemy0;
+        // removing hover effect from all characters and adding it to attack button
         makeAllCharactersUnchoosable();
+        $("#attack_btn").addClass("choosable");
+        // adding classes for styling attacker and defender during battle
         defender.icon.addClass("in_battle");
         attacker.icon.addClass("in_battle");
+        // move selected enemy to "Defender" area
         $("#defender").append(enemy0.icon);
+        // set game phase so that attack button functions
         gamePhase = "battle";
-        $("#attack_btn").addClass("choosable");
         $("#info").html("Click the attack button to attack your enemy.");
     }
 }
@@ -143,14 +152,14 @@ newGame();
 $("#info").html("Choose a character to fight with.");
 
 // creating click events for character icons
-for (let i = 0; i < characters.length; i++) {
-    characters[i].icon.on("click", function() {
-        chooseDefender(characters[i]);
-        chooseCharacter(characters[i]);
+characters.forEach(function(character) {
+    character.icon.on("click", function() {
+        chooseDefender(character);
+        chooseCharacter(character);
     });
-}
+});
 
-// attack button
+// attack button (code only runs when button is clicked and game is in battle phase)
 $("#attack_btn").on("click", function() {
     if (gamePhase === "battle") {
         attacker.attack(defender);
