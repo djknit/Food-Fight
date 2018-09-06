@@ -2,10 +2,7 @@ body {
     background-image: url("../images/picnic_blue.jpg");
     background-size: cover;
     min-height: 100vh;
-}
-
-#container {
-    margin: 10px;
+    padding: 10px;
 }
 
 .icon_image {
@@ -65,6 +62,7 @@ body {
     color: white;
 }
 
+
 #title {
     float: right;
     padding: 20px;
@@ -75,13 +73,23 @@ body {
     float: right;
 }
 
-#info, #wins_losses.not_empty {
+#info, #wins_losses.not_empty, #image_credits, #image_references {
     font-size: 22px;
     line-height: 1.2;
     background-color: whitesmoke;
     border: 2px solid rgb(25, 79, 255);
     display: inline-block;
     padding: 6px;
+}
+
+#image_credits {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+#image_references {
+    line-height: 2;
 }
 
 h1 {
