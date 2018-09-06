@@ -1,5 +1,5 @@
 // creating character objects
-// constructor
+// --- constructor
 function Character(name, hp, attack, counter) {
     this.name = name;
     this.startingHealthPoints = hp;
@@ -10,6 +10,7 @@ function Character(name, hp, attack, counter) {
     this.counterAttackPoints = counter;
     this.icon = $("#" + name.toLowerCase());
     this.isDefeated = false;
+    // methods
     this.incrementAttack = function() {
         this.attackPoints = this.attackPoints + this.startingAttackPoints;
     };
@@ -27,15 +28,32 @@ function Character(name, hp, attack, counter) {
         attacker0.reduceHp(this.counterAttackPoints);
     };
     this.reset = function() {
+        // move icon to character selection area
+        $("#characters").append(this.icon);
+        $("#characters").append(" ");
+        // reset hp and attack points to starting values (and update hp on page)
         this.healthPoints = this.startingHealthPoints;
         this.attackPoints = this.startingAttackPoints;
-        this.counterAttackPoints = this.startingCounterAttackPoints;
-        this.isDefeated = false;
         this.displayHp();
+        // recreating click event for icon IF the icon was removed from the page in previous game (thus causing it to loose the click event)
+        // - the conditional is necessary to avoid creating multiple click events on one icon
+        var self = this;
+        if (self.isDefeated) {
+            self.icon.on("click", function() {
+            chooseDefender(self);
+            chooseCharacter(self);
+            });
+        }
+        // resetting variable showing whether icon has been removed from the page
+        this.isDefeated = false;
+        // removing classes added during previous game from character icons
+        this.icon.removeClass("user_character enemy in_battle");
+        // adding "choosable" class to icon (used to allow hover effect can be applied only when character is available to be chosen)
+        this.icon.addClass("choosable")
     };
 }
 
-// character
+// --- creating individual characters using constructor
 var characters = [];
 characters[0] = new Character("Cupcake", 90, 30, 40);
 characters[1] = new Character("Cheeseburger", 105, 25, 60);
@@ -51,29 +69,39 @@ var wins = 0;
 var losses = 0;
 
 // Functions
-// resetting for new game
+// --- resetting for new game
 function newGame() {
+    // set game phase to "characterSelection" to allow character to be chosen
     gamePhase = "characterSelection";
     for (let i = 0; i < characters.length; i++) {
-        $("#characters").append(characters[i].icon);
-        $("#characters").append(" ");
-        // removing classes added during previous game from character icons
-        characters[i].icon.removeClass("user_character enemy in_battle");
-        characters[i].icon.addClass("choosable")
-        // Adding click events for elements that were dynamically removed and re-added to the page losing their click events in the process
-        if (characters[i].isDefeated) {
-            characters[i].icon.on("click", function() {
-                console.log("clicked");
-                chooseDefender(characters[i]);
-                chooseCharacter(characters[i]);
-            });
-        }
         characters[i].reset();
     }
     enemiesLeft = 3;
 }
 
-// functions for choosing character/defender (will be called when icon is clicked)
+// --- functions for adding/removing "choosable" class from ALL character icons
+// --- - this is used only to remove add/remove hover effect from icons
+function makeAllCharactersChoosable() {
+    for (i = 0; i < characters.length; i++) {
+        characters[i].icon.addClass("choosable");
+    }
+}
+
+function makeAllCharactersUnchoosable() {
+    for (i = 0; i < characters.length; i++) {
+        characters[i].icon.removeClass("choosable");
+    }
+}
+
+// --- function for writing wins and losses to page
+function displayWinsAndLosses() {
+    if ($("#wins_losses").hasClass("not_empty") === false) {
+        $("#wins_losses").addClass("not_empty");
+    }
+    $("#wins_losses").html("Wins: " + wins + "<br>Losses: " + losses);
+}
+
+// --- functions for choosing character/defender (will be called when icon is clicked)
 function chooseCharacter(character0) {
     if (gamePhase === "characterSelection") {
         attacker = character0;
@@ -105,31 +133,9 @@ function chooseDefender(enemy0) {
         attacker.icon.addClass("in_battle");
         $("#defender").append(enemy0.icon);
         gamePhase = "battle";
-        $("#info").html("Click the attack button to attack your enemy.")
+        $("#attack_btn").addClass("choosable");
+        $("#info").html("Click the attack button to attack your enemy.");
     }
-}
-
-// function for adding "choosable" class to all character icons
-function makeAllCharactersChoosable() {
-    for (i = 0; i < characters.length; i++) {
-        characters[i].icon.addClass("choosable");
-    }
-}
-
-// function for removing "choosable" class from all character icons
-function makeAllCharactersUnchoosable() {
-    console.log("making unchoosable")
-    for (i = 0; i < characters.length; i++) {
-        characters[i].icon.removeClass("choosable");
-    }
-}
-
-// function for writing wins and losses to page
-function displayWinsAndLosses() {
-    if ($("#wins_losses").hasClass("not_empty") === false) {
-        $("#wins_losses").addClass("not_empty");
-    }
-    $("#wins_losses").html("Wins: " + wins + "<br>Losses: " + losses);
 }
 
 // Gameplay
@@ -139,7 +145,6 @@ $("#info").html("Choose a character to fight with.");
 // creating click events for character icons
 for (let i = 0; i < characters.length; i++) {
     characters[i].icon.on("click", function() {
-        console.log(characters[i].name + " clicked");
         chooseDefender(characters[i]);
         chooseCharacter(characters[i]);
     });
@@ -153,22 +158,19 @@ $("#attack_btn").on("click", function() {
         attacker.incrementAttack();
         if (defender.healthPoints <= 0) {
             defender.isDefeated = true;
-            console.log("Enemy defeated");
             $("#info").append("<br>" + attacker.name + " defeated " + defender.name + ".");
             defender.icon.remove();
             enemiesLeft--;
             attacker.icon.removeClass("in_battle");
-            console.log(enemiesLeft + " enemies left");
-            makeAllCharactersChoosable();
-            attacker.icon.removeClass("choosable");
             if (enemiesLeft === 0) {
                 $("#info").prepend("You won! Choose another character to fight with!<br>Last round:<br>");
                 wins++;
                 displayWinsAndLosses();
                 newGame();
-                console.log("win");
             }
             else {
+                makeAllCharactersChoosable();
+                attacker.icon.removeClass("choosable");
                 gamePhase = "enemySelection";
                 $("#info").append("<br>Choose an enemy to battle next.");
             }
@@ -182,7 +184,6 @@ $("#attack_btn").on("click", function() {
                 losses++;
                 displayWinsAndLosses();
                 newGame();
-                console.log("loss");
             }
         }
     }

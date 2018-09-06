@@ -32,8 +32,8 @@ body {
     vertical-align: top;
 }
 
-.icon.choosable:hover {
-    outline: 1px solid gray;
+.choosable:hover {
+    outline: 1.8px solid gray;
 }
 
 .icon:active {
