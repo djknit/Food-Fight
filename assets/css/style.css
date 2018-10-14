@@ -85,17 +85,27 @@ body {
 #image_credits {
     float: right;
     margin: 30px 10px 10px;
-    font-size: 18px;
-    color: black;
 }
 
-#image_references {
-    line-height: 2;
-    font-size: 18px;
+#all_except_image_credits {
+    min-height: calc(100vh - 92.4px);
+}
+
+a {
+    color: black;
+    text-decoration: none;
+    font-size: 17px;
+    font-style: italic;
+}
+
+a:hover {
+    text-decoration: underline;
 }
 
 #image_references li {
+    line-height: 2;
     margin-bottom: 20px;
+    font-size: 19px;
 }
 
 h1 {
