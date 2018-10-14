@@ -12,71 +12,74 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery.js"></script>
 </head>
 
-<body>    
-    <div id="title">
+<body>
+    <div id="all-except-image-credits">
+        <div id="title">
 
-        <h1>Food Fight RPG</h1>
-    
-        <div id="wins_losses"></div>
-    
-    </div>
-
-    <div id="characters">
+            <h1>Food Fight RPG</h1>
         
-        <div id="cupcake" class="icon">
-            <span class="icon_text name">Cupcake</span>
-            <div class="icon_image_container">
-                <img src="assets/images/cupcake.jpg" class="icon_image">
-            </div>
-            <span class="icon_text hp cupcake">100 hp</span>
+            <div id="wins_losses"></div>
+        
         </div>
 
-        <div id="cheeseburger" class="icon">
-            <span class="icon_text name">Cheeseburger</span>
-            <div class="icon_image_container">
-                <img src="assets/images/cheeseburger.jpg" class="icon_image">
+        <div id="characters">
+            
+            <div id="cupcake" class="icon">
+                <span class="icon_text name">Cupcake</span>
+                <div class="icon_image_container">
+                    <img src="assets/images/cupcake.jpg" class="icon_image">
+                </div>
+                <span class="icon_text hp cupcake">100 hp</span>
             </div>
-            <span class="icon_text hp cheeseburger">100 hp</span>
+
+            <div id="cheeseburger" class="icon">
+                <span class="icon_text name">Cheeseburger</span>
+                <div class="icon_image_container">
+                    <img src="assets/images/cheeseburger.jpg" class="icon_image">
+                </div>
+                <span class="icon_text hp cheeseburger">100 hp</span>
+            </div>
+
+            <div id="artichoke" class="icon">
+                <span class="icon_text name">Artichoke</span>
+                <div class="icon_image_container">
+                    <img src="assets/images/artichoke.jpg" class="icon_image">
+                </div>
+                <span class="icon_text hp artichoke">100 hp</span>
+            </div>
+
+            <div id="carrot" class="icon">
+                <span class="icon_text name">Carrot</span>
+                <div class="icon_image_container">
+                    <img src="assets/images/carrot.jpg" class="icon_image">
+                </div>
+                <span class="icon_text hp carrot">100 hp</span>
+            </div>
+
         </div>
 
-        <div id="artichoke" class="icon">
-            <span class="icon_text name">Artichoke</span>
-            <div class="icon_image_container">
-                <img src="assets/images/artichoke.jpg" class="icon_image">
-            </div>
-            <span class="icon_text hp artichoke">100 hp</span>
+        <div id="your_character" class="icon_area">
+            <h2>Your Character</h2>
         </div>
 
-        <div id="carrot" class="icon">
-            <span class="icon_text name">Carrot</span>
-            <div class="icon_image_container">
-                <img src="assets/images/carrot.jpg" class="icon_image">
-            </div>
-            <span class="icon_text hp carrot">100 hp</span>
+        <div id="enemies" class="icon_area">
+            <h2>Enemies Available To Attack</h2>
         </div>
 
+        <div id="fight_section">
+            <h2>Fight Section</h2>
+            <button id="attack_btn">Attack</button>
+        </div>
+
+        <div id="defender" class="icon_area">
+            <h2>Defender</h2>
+        </div>
+
+        <div id="info"></div>
+
     </div>
-
-    <div id="your_character" class="icon_area">
-        <h2>Your Character</h2>
-    </div>
-
-    <div id="enemies" class="icon_area">
-        <h2>Enemies Available To Attack</h2>
-    </div>
-
-    <div id="fight_section">
-        <h2>Fight Section</h2>
-        <button id="attack_btn">Attack</button>
-    </div>
-
-    <div id="defender" class="icon_area">
-        <h2>Defender</h2>
-    </div>
-
-    <div id="info"></div>
-
-    <div id="image_credits"><a href="image_references.html">Images obtained from VectorStock</a></div>
+    
+        <div id="image_credits"><a href="image_references.html">Images obtained from VectorStock</a></div>
 
     <!-- Linking javascript -->
     <script type="text/javascript" src="assets/javascript/game.js"></script>
