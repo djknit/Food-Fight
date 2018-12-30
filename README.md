@@ -1,4 +1,57 @@
-# unit-4-game
-This is a simple RPG game. The user must choose a character to play as and then battle the remaining characters one-at-a-time until either the user's character or all of the remaining characters are defeated. Each character has three values associated with them: health points, starting attack power, and counter attack power. Once an enemy is selected to battle, the user must press the attack button to attack the defender until either the defender or the user's character is defeated. When the button is pressed, the user's character deals damage to the defender equal to the user's character's current attack power. The defender then deals damage to the user's character equal to the defender's counter attack power. Damage dealt to a character is subtracted from that player's health points. The first time that the user attacks in each game, their attack power is equal their starting attack power. After each attack, the user's character's attack power increases by that character's starting attack power. Counter attack power does not increase. A character is defeated when that character's health score reaches 0 or less. The health points are displayed on the character icons, but the attack powers and counter attack powers of the characters are not shown and must be determined by playing the game and noting the damage done in battle. It is possible for the user to both win and lose the game with any character.
+# Food Fight
 
-This project is developed and maintained by David Knittel. Questions or comments are welcomed! Email me: djknit@gmail.com. Visit my github repository.
+### Food Fight is a simple RPG game.
+
+## Contents
+* [Links](#links)
+* [Project Goals](#project-goals)
+* [Project Features](#project-features)
+* [Technologies Used](#technologies-used)
+* [Instructions for Use](#instructions-for-use)
+* [Developer](#developer)
+
+## Links
+* Live App: [djknit.github.io/Food-Fight/](https://djknit.github.io/Food-Fight/)
+* GitHub Repository: [github.com/djknit/Food-Fight](https://github.com/djknit/Food-Fight/)
+
+## Project Goals
+Create a web-based RPG game using jQuery for DOM interaction that satisfies the following conditions.
+* The user may choose one of 4 characters to play the game as by clicking on that character's picture at the beginning of the game.
+* Each character has the 3 attributes "health points" (HP), "attack points," and "counter attack power."
+  * The values of these attributes are positive integers.
+  * No two characters have the exact same attribute values.
+* Once the player's character is selected, the player must fight the other three characters one at a time. The enemies are also selected by clicking on the character's picture. The selected opponent character's picture should be moved to a defender area when selected.
+* Once an enemy is selected to fight, the user must press the attack button to attack their opponent until either the player's character or the opponent is defeated.
+* When the attack button is pressed:
+  * The player's character deals damage to the opponent equal to the current attack points value of the attacking character. This damage is subtracted from the opponents health points (HP).
+  * The opponent deals damage to the player's character equal to the opponent's counter attack power. The damage is subtracted from the player's character's HP.
+  * The player's character's attack points value is increased by that character's base attack points (the starting value of the character's attack points).
+* If either the player's character's or the opponent character's HP reaches 0 or less, that character is defeated.
+  * When an opponent character is defeated, it's picture is removed from the screen, and the user must select another opponent to fight.
+  * When the player's character is defeated, the game is over and the player loses.
+* The player wins the game when they have defeated all 3 opponents.
+* The player is able to both win and lose when playing as each character. (The outcome of the game will depend on the order in which the enemies are battled).
+
+## Project Features
+The finished app satifies all of the conditions listed under [Project Goals](#Project-Goals). Additionally, the following statements are also true.
+* When the player attacks an opponent and the opponent is defeated by the attack, the opponent does not deal counter attack damage to the player's character.
+* Each character's HP is displayed by the character's picture. Attack points and counter attack points are not displayed.
+* After each attack, the damage done to each character is displayed on the screen.
+* The player is able to determine the attack points and counter attack points of each character by making note of the ammount of damage they deal during battle.
+
+## Technologies Used
+* jQuery (for DOM interaction and AJAX)
+* HTML, CSS, and JavaScript
+
+## Instructions for Use
+To run the app, visit [https://djknit.github.io/Food-Fight/](https://djknit.github.io/Food-Fight/). Alternatively, you can run the app by cloning the repository to you local machine and openning `index.html` in your browser.
+Select a character to play as by clicking on that character. Battle your enemies one at a time until you have defeated them all or you have been defeated.
+
+## Developer
+This project is developed and maintained by David Knittel. Any and all questions, comments, suggestions, or proposed contributions are welcome.
+* Email: [djknit@gmail.com](mailto:djknit@gmail.com)
+* Portfolio: [djknit.github.io](https://djknit.github.io/)
+* GitHub: [github.com/djknit](https://github.com/djknit)
+* LinkedIn: [linkedin.com/in/djknit](https://www.linkedin.com/in/djknit/)
+
+This project was originally developed as a homework assignment for the KU Coding Bootcamp Full Stack Flex program and uses specifications laid out by the homework requirements.
