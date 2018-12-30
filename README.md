@@ -40,7 +40,7 @@ The finished app satisfies all the conditions listed under [Project Goals](#Proj
 * The player is able to determine the attack points and counter attack points of each character by making note of the amount of damage they deal during battle.
 
 ## Technologies Used
-* jQuery (for DOM interaction and AJAX)
+* jQuery
 * HTML, CSS, and JavaScript
 
 ## Instructions for Use
